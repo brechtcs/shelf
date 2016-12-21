@@ -6,7 +6,7 @@ pub struct Shelf {
 }
 
 impl Shelf {
-  fn new(path: &str) -> Shelf {
+  pub fn new(path: &str) -> Shelf {
     fs::DirBuilder::new()
       .recursive(true)
       .create(path)
@@ -17,7 +17,7 @@ impl Shelf {
     }
   }
 
-  fn set(&self, key: &str, value: &str) -> () {
+  pub fn set(&self, key: &str, value: &str) -> () {
     let mut path = String::new();
     path.push_str(&self.dir);
     path.push_str("/");
@@ -27,7 +27,7 @@ impl Shelf {
     entry.write(value.as_bytes()).unwrap();
   }
 
-  fn get(&self, key: &str) -> String {
+  pub fn get(&self, key: &str) -> String {
     let mut value = String::new();
     let mut path = String::new();
     path.push_str(&self.dir);
@@ -43,7 +43,7 @@ impl Shelf {
     }
   }
 
-  fn keys(&self) -> Vec<String> {
+  pub fn keys(&self) -> Vec<String> {
     let mut keys = Vec::new();
 
     for entry in fs::read_dir(&self.dir).unwrap() {
@@ -53,7 +53,7 @@ impl Shelf {
     keys
   }
 
-  fn values(&self) -> Vec<String> {
+  pub fn values(&self) -> Vec<String> {
     let mut values = Vec::new();
 
     for entry in fs::read_dir(&self.dir).unwrap() {
