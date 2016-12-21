@@ -3,7 +3,7 @@ name = "shelf"
 version = "0.1.0"
 authors = ["Brecht Savelkoul <brecht.savelkoul@gmail.com>"]
 description = "Simple key-value storage"
-license = MIT
+license = "MIT"
 
 [lib]
 name = "shelf"
