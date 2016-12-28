@@ -57,8 +57,10 @@ impl Shelf {
     let mut values = Vec::new();
 
     for entry in fs::read_dir(&self.dir).unwrap() {
-      let value = self.get(&entry.unwrap().file_name().into_string().unwrap());
-      values.push(value);
+      match self.get(&entry.unwrap().file_name().into_string().unwrap()) {
+        Some(value) => values.push(value),
+        None => ()
+      }
     }
     values
   }
@@ -74,8 +76,8 @@ mod test {
     shelf.set("test", "Some data");
     shelf.set("other", "Some more");
 
-    assert_eq!("Some data", shelf.get("test"));
-    assert_eq!("Some more", shelf.get("other"));
+    assert_eq!("Some data", shelf.get("test").unwrap());
+    assert_eq!("Some more", shelf.get("other").unwrap());
     assert_eq!(2, shelf.keys().len());
     assert_eq!(2, shelf.values().len());
   }
