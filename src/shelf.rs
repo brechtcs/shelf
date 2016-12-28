@@ -1,5 +1,6 @@
-use std::io::prelude::*;
 use std::fs;
+use std::io::prelude::*;
+use std::path::PathBuf;
 
 pub struct Shelf {
   dir: String
@@ -18,10 +19,8 @@ impl Shelf {
   }
 
   pub fn set(&self, key: &str, value: &str) -> () {
-    let mut path = String::new();
-    path.push_str(&self.dir);
-    path.push_str("/");
-    path.push_str(key);
+    let mut path = PathBuf::from(&self.dir);
+    path.push(key);
 
     let mut entry = fs::File::create(path).unwrap();
     entry.write(value.as_bytes()).unwrap();
@@ -29,10 +28,8 @@ impl Shelf {
 
   pub fn get(&self, key: &str) -> Option<String> {
     let mut value = String::new();
-    let mut path = String::new();
-    path.push_str(&self.dir);
-    path.push_str("/");
-    path.push_str(key);
+    let mut path = PathBuf::from(&self.dir);
+    path.push(key);
 
     match fs::File::open(path) {
       Err(_) => None,
