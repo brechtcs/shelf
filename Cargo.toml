@@ -1,6 +1,6 @@
 [package]
 name = "shelf"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Brecht Savelkoul <brecht.savelkoul@gmail.com>"]
 description = "Simple key-value storage"
 license = "MIT"

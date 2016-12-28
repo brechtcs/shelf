@@ -27,7 +27,7 @@ impl Shelf {
     entry.write(value.as_bytes()).unwrap();
   }
 
-  pub fn get(&self, key: &str) -> String {
+  pub fn get(&self, key: &str) -> Option<String> {
     let mut value = String::new();
     let mut path = String::new();
     path.push_str(&self.dir);
@@ -35,10 +35,10 @@ impl Shelf {
     path.push_str(key);
 
     match fs::File::open(path) {
-      Err(_) => value,
+      Err(_) => None,
       Ok(mut entry) => {
         entry.read_to_string(&mut value).unwrap();
-        value
+        Some(value)
       }
     }
   }
