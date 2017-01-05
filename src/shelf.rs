@@ -40,6 +40,16 @@ impl Shelf {
     }
   }
 
+  pub fn delete(&self, key: &str) -> () {
+    let mut path = PathBuf::from(&self.dir);
+    path.push(key);
+
+    match fs::remove_file(path) {
+      Err(why) => println!("{}", why),
+      Ok(_) => ()
+    }
+  }
+
   pub fn keys(&self) -> Vec<String> {
     let mut keys = Vec::new();
 
@@ -77,5 +87,12 @@ mod test {
     assert_eq!("Some more", shelf.get("other").unwrap());
     assert_eq!(2, shelf.keys().len());
     assert_eq!(2, shelf.values().len());
+
+    shelf.delete("other");
+
+    assert_eq!("Some data", shelf.get("test").unwrap());
+    assert_eq!(None, shelf.get("other"));
+    assert_eq!(1, shelf.keys().len());
+    assert_eq!(1, shelf.values().len());
   }
 }
